@@ -4,7 +4,7 @@
 ; No.Control: 23170369
 ; Horario: 10:00 - 11:00
 ; Docente: Ing. José Luis Medina Jiménez
-; Práctica 02: Modificación de un registro desde un procedimiento
+; Práctica 02: Uso del Registro EBX en Procedimientos
 
 INCLUDE Irvine32.inc
 
@@ -13,22 +13,21 @@ INCLUDE Irvine32.inc
 
 .code
 main PROC
-    mov ebx, 10
-    call Procedimiento1
+    mov ebx, 10                 ; Asigna el valor inicial 10 al registro EBX
+    call Procedimiento1         ; Llama al procedimiento para modificar EBX
 
-    mov edx, OFFSET mensaje
+    mov edx, OFFSET mensaje     ; Imprime la etiqueta en consola
     call WriteString
 
-    mov eax, ebx
+    mov eax, ebx                ; Copia el resultado (15) a EAX para imprimirlo
     call WriteDec
     call Crlf
     exit
 main ENDP
 
-; Entra EBX con el valor inicial y sale aumentado en cinco.
 Procedimiento1 PROC
-    add ebx, 5
-    ret
+    add ebx, 5                  ; Suma 5 directamente sobre el valor de EBX
+    ret                         ; Regresa el control a main conservando el cambio
 Procedimiento1 ENDP
 
 END main

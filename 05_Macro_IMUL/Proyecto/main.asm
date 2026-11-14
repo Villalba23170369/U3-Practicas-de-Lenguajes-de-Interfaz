@@ -1,26 +1,22 @@
-; Materia: Lenguajes de Interfaz - Unidad 3
-; Alumno: Medina González Cristian Roberto
-; Matrícula: 23170234
+; Materia: Lenguajes de Interfaz
+; Unidad: #3
+; Alumno: Villalba Rodriguez Kevin Eliazar
+; No.Control: 23170369
 ; Horario: 10:00 - 11:00
 ; Docente: Ing. José Luis Medina Jiménez
 ; Práctica 05: Agregar una macro con IMUL
-; Descripción: Completa el ejemplo de mensajes con una multiplicación.
 
 INCLUDE Irvine32.inc
 
-; Entrada: nombre de una cadena. Salida: texto y salto de línea.
-; Modifica EDX; el código se expande durante el ensamblado.
 MostrarMensaje MACRO texto
-    mov edx, OFFSET texto
+    mov edx, OFFSET texto           ; Carga la dirección de la cadena en EDX
     call WriteString
     call Crlf
 ENDM
 
-; Entrada: dos valores. Salida: producto en EAX.
-; Modifica EAX y las banderas. La impresión se hace desde main.
 MultiplicarValores MACRO valor1, valor2
-    mov eax, valor1
-    imul eax, valor2
+    mov eax, valor1                 ; Carga el primer operando en EAX
+    imul eax, valor2                ; Multiplica con signo y deja el producto en EAX
 ENDM
 
 .data
@@ -32,17 +28,15 @@ ENDM
 
 .code
 main PROC
-    MostrarMensaje mensajeBienvenida
-    MostrarMensaje mensajeResultado
+    MostrarMensaje mensajeBienvenida  ; Expande la macro para imprimir bienvenida
+    MostrarMensaje mensajeResultado   ; Expande la macro para imprimir encabezado
 
-    ; Asignamos dos valores y usamos la macro solicitada: 6 * 7 = 42.
-    MultiplicarValores valorA, valorB
+    MultiplicarValores valorA, valorB ; Expande la macro: calcula 6 * 7 y guarda 42 en EAX
 
-    ; EAX ya contiene el producto. WriteDec lo muestra como entero sin signo.
-    call WriteDec
+    call WriteDec                     ; Imprime el valor almacenado en EAX
     call Crlf
 
-    MostrarMensaje mensajeFin
+    MostrarMensaje mensajeFin         ; Expande la macro para imprimir despedida
     exit
 main ENDP
 

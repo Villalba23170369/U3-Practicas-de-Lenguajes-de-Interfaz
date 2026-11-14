@@ -1,28 +1,23 @@
-; Materia: Lenguajes de Interfaz - Unidad 3
-; Alumno: Medina González Cristian Roberto
-; Matrícula: 23170234
+; Materia: Lenguajes de Interfaz
+; Unidad: #3
+; Alumno: Villalba Rodriguez Kevin Eliazar
+; No.Control: 23170369
 ; Horario: 10:00 - 11:00
 ; Docente: Ing. José Luis Medina Jiménez
-; Práctica 04: Macro de multiplicación
-; Descripción: Utiliza macros para mostrar mensajes y multiplicar 8 por 5.
+; Práctica 04: Uso de Macros (MACRO y ENDM)
 
 INCLUDE Irvine32.inc
 
-; Recibe el nombre de una cadena terminada en cero. Modifica EDX.
-; Al ensamblar, estas instrucciones se insertan donde usamos la macro.
 MostrarMensaje MACRO texto
-    mov edx, OFFSET texto
+    mov edx, OFFSET texto           ; Carga la dirección de la cadena en EDX
     call WriteString
     call Crlf
 ENDM
 
-; Recibe dos valores de 32 bits o inmediatos compatibles con IMUL.
-; Deja el producto en EAX y lo muestra. Modifica EAX y las banderas.
-; Los datos de esta práctica son positivos y su producto cabe en 32 bits.
 Multiplicar MACRO valor1, valor2
-    mov eax, valor1
-    imul eax, valor2
-    call WriteDec
+    mov eax, valor1                 ; Carga el primer operando en EAX
+    imul eax, valor2                ; Multiplica con signo: EAX = valor1 * valor2
+    call WriteDec                   ; Imprime el resultado almacenado en EAX
     call Crlf
 ENDM
 
@@ -35,13 +30,12 @@ ENDM
 
 .code
 main PROC
-    MostrarMensaje mensajeBienvenida
-    MostrarMensaje mensajeProducto
+    MostrarMensaje mensajeBienvenida  ; Expande la macro para imprimir bienvenida
+    MostrarMensaje mensajeProducto    ; Expande la macro para imprimir encabezado
 
-    ; La macro toma los dos números y muestra el producto: cuarenta.
-    Multiplicar num1, num2
+    Multiplicar num1, num2            ; Expande la macro: calcula 8 * 5 e imprime 40
 
-    MostrarMensaje mensajeFin
+    MostrarMensaje mensajeFin         ; Expande la macro para imprimir despedida
     exit
 main ENDP
 
